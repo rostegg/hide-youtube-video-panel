@@ -35,7 +35,7 @@ const getExtensionStatus = () => {
 }
 
 const onGettingError = (err) => {
-    console.log(`Recieved error, when try connect to local storage : ${err}`)  
+    console.log(`Recieved error, while trying to connect to local storage : ${err}`)  
 }
 const onGettingResult = (result) => {
     const status = result.hideYoutubeVideoPanelExtensionStatus || false;
