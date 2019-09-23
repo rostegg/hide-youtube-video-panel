@@ -78,7 +78,7 @@ function processNavigate() {
 function insertButton() {
   const buttonsElement = document.getElementById('buttons');
   if (!buttonsElement.querySelector('#hide-panel-extension-button')){
-    const extensionButtonHtml = extensionButtonTemplate.replace(iconMark, extensionMode ?showIconSvg : hideIconSvg);
+    const extensionButtonHtml = extensionButtonTemplate.replace(iconMark, extensionMode ? showIconSvg : hideIconSvg);
     buttonsElement.insertAdjacentHTML('afterbegin',extensionButtonHtml);
     const extensionButton = document.getElementById('hide-panel-extension-button');
     extensionButton.addEventListener('click', onClickEventHandler, false); 
