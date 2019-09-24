@@ -14,7 +14,7 @@ function onMessageRecieved(message) {
             browser.storage.local.get(fieldName).then((result) => {
                 const status = !(result[fieldName]|| false);
                 setExtensionStatus(status).then((result)=> {
-                updateOpenedTabs(status);
+                    updateOpenedTabs(status);
                 });
             });
             break;
@@ -31,7 +31,6 @@ const updateOpenedTabs = (status) => {
     tabsQuery.then(
         (tabs) => {
             tabs.forEach(tab => {
-                console.log("send to " + tab.id);
                 browser.tabs.sendMessage(
                     tab.id,
                     {status: status}
