@@ -1,7 +1,7 @@
 {
 
     "manifest_version": 2,
-    "name": "Hide youtube buttom panel",
+    "name": "Hide buttom panel of video on Youtube",
     "version": "1.0",
    
     "description": "Webextension, which hide buttom panel of video on Youtube in single click ",
@@ -11,7 +11,7 @@
   
     "applications": {
       "gecko": {
-        "id": "youtube-hide-bottom-panel@mozilla.org",
+        "id": "hide-youtube-bottom-panel@mozilla.org",
         "strict_min_version": "45.0"
       }
     },
@@ -24,5 +24,5 @@
         "js": ["src/index.js"]
       }
     ],
-    "permissions": ["storage"]
+    "permissions": ["storage", "tabs"]
   }

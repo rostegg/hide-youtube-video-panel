@@ -14,7 +14,7 @@ function onMessageRecieved(message) {
             browser.storage.local.get(fieldName).then((result) => {
                 const status = !(result[fieldName]|| false);
                 setExtensionStatus(status).then((result)=> {
-                    hideYoutubePanelPort.postMessage({status: status});
+                updateOpenedTabs(status);
                 });
             });
             break;
@@ -24,6 +24,24 @@ function onMessageRecieved(message) {
         default:
             console.log(`Unknown command from content script: ${message}`)
     }
+}
+
+const updateOpenedTabs = (status) => {
+    const tabsQuery = browser.tabs.query({url: "*://*.youtube.com/*"});
+    tabsQuery.then(
+        (tabs) => {
+            tabs.forEach(tab => {
+                console.log("send to " + tab.id);
+                browser.tabs.sendMessage(
+                    tab.id,
+                    {status: status}
+                );
+            });
+        },
+        (error) => {
+            console.log(`Can't get opened tabs: ${error}`);
+        }
+    );
 }
 
 const setExtensionStatus = (status) => {

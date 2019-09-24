@@ -1,4 +1,3 @@
-// TODO: autoupdate on opened tabs
 const eventHandler = (document.body || document.documentElement);
 const elementsToHide = ['.ytp-chrome-bottom', '.ytp-player-content ytp-iv-player-content'];
 
@@ -24,14 +23,22 @@ const hideYoutubePanelPort = browser.runtime.connect({name:"hide-youtube-panel-p
 hideYoutubePanelPort.onMessage.addListener(function(message) {
   switch (true) {
     case typeof message.status === "boolean":
-      extensionMode = message.status;
-      updateIcon();
-      processVideoPanelStatus();
+      updateStatus(message.status);
       break;
     default:
         hideYoutubePanelPort.postMessage(message);
   }
 });
+
+browser.runtime.onMessage.addListener(message => {
+  (typeof message.status === "boolean") && updateStatus(message.status);
+});
+
+const updateStatus = (status) => {
+  extensionMode = status;
+  updateIcon();
+  processVideoPanelStatus();
+}
 
 const requestStatus = () => {
   hideYoutubePanelPort.postMessage({requestStatus: true});
@@ -53,7 +60,7 @@ function updateHandler() {
 function processVideoPanelStatus(){
   elementsToHide.forEach(elementSelector => {
     const element = document.querySelector(elementSelector);
-    extensionMode ? hideElement(element) : showElement(element) ;
+    element && (extensionMode ? hideElement(element) : showElement(element));
   });
 }
 
